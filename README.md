@@ -9,7 +9,7 @@ The major problem behind this is that it gets harder and harder to get knowledge
 
 Besides the battery problems, ad servers became an attractive attack platform in the past. Controlling ad servers enable attackers to deploy malware to bigger audiences on large websites. These ad platforms are controlled by random ad service providers and not necessarily by those large website operators.
 
-*dnsblock* happens before the real DNS request. So should does not interfere with DNSSEC.
+*dnsblock* happens before the real DNS request. So it should not interfere with DNSSEC.
 
 ## INSTALLATION
 
