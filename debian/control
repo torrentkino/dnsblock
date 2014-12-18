@@ -1,0 +1,13 @@
+Source: dnsblock
+Section: net
+Priority: extra
+Maintainer: Aiko Barz <aiko@torrentkino.de>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://github.com/torrentkino/dnsblock
+
+Package: dnsblock
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Ad blocker
+ Works like /etc/hosts file but with regular expressions

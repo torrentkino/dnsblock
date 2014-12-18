@@ -1,0 +1,119 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "DNSBLOCK" "1" "December 2014" "" ""
+.
+.SH "NAME"
+\fBdnsblock\fR \- Hosts file with regex support
+.
+.SH "DESCRIPTION"
+\fIdnsblock\fR is a NSS library that works like the /etc/hosts file except that it makes use of Perl regular expressions (PCRE) to determine the target\. That makes it more suitable to block outgoing traffic than the /etc/hosts file itself\. Create a configuration file /etc/dnsblock and add \fIdnsblock\fR to your /etc/nsswitch\.conf configuration to make it work\.
+.
+.P
+The major problem behind this is that it gets harder and harder to get knowledge of the ongoing outgoing traffic\. Some people create huge /etc/hosts files that contain the exact hostnames of the offending servers\. This is a little bit too static while cloud services throw out hundreds of new servers with random IP addresses every week\.
+.
+.P
+Besides the battery problems, ad servers became an attractive attack platform in the past\. Controlling ad servers enable attackers to deploy malware to bigger audiences on large websites\. These ad platforms are controlled by random ad service providers and not necessarily by those large website operators\.
+.
+.P
+\fIdnsblock\fR happens before the real DNS request\. So should does not interfere with DNSSEC\.
+.
+.SH "INSTALLATION"
+There is a simple installation helper for Debian/Ubuntu\. Just run one of the following commands to create a installable package\.
+.
+.IP "" 4
+.
+.nf
+
+$ make debian
+$ make ubuntu
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Otherwise, you may use
+.
+.IP "" 4
+.
+.nf
+
+$ make
+$ sudo make install
+.
+.fi
+.
+.IP "" 0
+.
+.SH "CONFIGURATION"
+/etc/nsswitch\.conf
+.
+.IP "" 4
+.
+.nf
+
+hosts: files dnsblock dns
+.
+.fi
+.
+.IP "" 0
+.
+.SH "EXAMPLES"
+/etc/dnsblock
+.
+.IP "" 4
+.
+.nf
+
+# Block ad servers like adserver\.example\.net
+127\.0\.0\.1   ^adserver\e\.
+
+# Block tracking servers like tracking123\.somedomain\.com
+127\.0\.0\.2   ^tracking\ed*\e\.
+
+# Block social media plugins that track you on every bigger site
+::1         \e\.randombook\.(com|net)$
+
+# Block requests to specific TLDs
+::1         \e\.(gov|xxx)$
+.
+.fi
+.
+.IP "" 0
+.
+.SH "LOGGING"
+\fIdnsblock\fR logs all dns requests at the moment\. An on/off switch will be made later\. You can follow the lookup attempts with the following approaches depending on your system\.
+.
+.IP "" 4
+.
+.nf
+
+$ tail \-f /var/log/messages
+$ journalctl \-b \-f
+.
+.fi
+.
+.IP "" 0
+.
+.SH "CHROMIUM NOTES"
+chromium seems to use its own DNS resolver and bypasses the DNS resolver of your operating system\. You can disable this behaviour by surfing to \fIchrome://flags/\fR\. Disable the \fIexperimental asynchronous DNS client\fR\.
+.
+.SH "FIREFOX NOTES"
+Firefox offers the following plugins, that make your surfing experience extremely uncomfortable\. :)
+.
+.IP "" 4
+.
+.nf
+
+* NoScript
+* RequestPolicy
+* CookieMonster
+* Certificate Patrol
+* DNSSEC TLSA Validator
+* Various Adblockers
+.
+.fi
+.
+.IP "" 0
+

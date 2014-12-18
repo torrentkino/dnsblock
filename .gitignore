@@ -1,0 +1,10 @@
+dnsblock/libnss_dnsblock.so.2
+debian/dnsblock/
+debian/dnsblock.debhelper.log
+debian/substvars
+debian/dnsblock.postinst.debhelper
+debian/dnsblock.postrm.debhelper
+debian/files
+debian/dnsblock.substvars
+*.o
+*~
