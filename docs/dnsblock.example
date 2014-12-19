@@ -13,6 +13,7 @@
 
 # Tracking
 ::1 \.meetrics\.(com|net)$ # Ad Attention Monitor
+::1 rce\.veeseo\.com$ # veeseo offers fully automated technologies to increase your video and article views.
 
 # Tracking: My employer depends on those counters. Be nice to my employer. ;)
 #::1 \.ioam\.de$
