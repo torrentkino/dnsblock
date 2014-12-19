@@ -14,6 +14,7 @@
 # Tracking
 ::1 \.meetrics\.(com|net)$ # Ad Attention Monitor
 ::1 rce\.veeseo\.com$ # veeseo offers fully automated technologies to increase your video and article views.
+::1 da\.feedsportal\.com$ # interferes with TechRepublic email newsletters
 
 # Tracking: My employer depends on those counters. Be nice to my employer. ;)
 #::1 \.ioam\.de$
@@ -4254,7 +4255,6 @@
 127.0.0.1 d.adserve.com
 127.0.0.1 dads.new.digg.com
 127.0.0.1 d.ads.readwriteweb.com
-#127.0.0.1 da.feedsportal.com	# interferes with TechRepublic email newsletters
 127.0.0.1 d.agkn.com
 127.0.0.1 daily-saver.com
 127.0.0.1 darmowe-liczniki.info

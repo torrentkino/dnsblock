@@ -41,7 +41,7 @@ Otherwise, you may use
 	127.0.0.2	^tracking\d*\.
 
 	# Block social media plugins that track you on every bigger site
-	::1			\.randombook.(com|net)$
+	::1			\.randombook\.(com|net)$
 
 	# Block requests to specific TLDs
 	::1			\.(gov|xxx)$
