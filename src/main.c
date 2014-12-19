@@ -29,17 +29,45 @@ along with dnsblock.  If not, see <http://www.gnu.org/licenses/>.
 int _nss_dnsblock_lookup(const char *hostname, UCHAR * address,
 			 int *af, int *address_size)
 {
+	int result = 0;
+	char filename[256];
+
+	/* 1st: Load global file */
+	result = _nss_dnsblock_load("/etc/dnsblock", hostname, address,
+				    af, address_size);
+
+	if (result == 1) {
+		return 1;
+	}
+
+	/* 2nd: Load local file */
+	if (getenv("HOME") == NULL) {
+		return 0;
+	}
+
+	snprintf(filename, 256, "%s/.dnsblock", getenv("HOME"));
+
+	result = _nss_dnsblock_load(filename, hostname, address,
+				    af, address_size);
+
+	if (result == 1) {
+		return 1;
+	}
+
+	return 0;
+}
+
+int _nss_dnsblock_load(const char *filename, const char *hostname,
+		       UCHAR * address, int *af, int *address_size)
+{
 	FILE *fp = NULL;
 	char str[BUF_SIZE];
 	char regex[256];
 	char target[256];
 	int result = 0, r0 = 0, r1 = 0;
-	IP sin;
 	UCHAR buf[sizeof(struct in6_addr)];
 
-	memset(&sin, '\0', sizeof(IP));
-
-	fp = fopen("/etc/dnsblock", "r");
+	fp = fopen(filename, "r");
 	if (fp == NULL) {
 		return 0;
 	}
@@ -98,6 +126,7 @@ int _nss_dnsblock_lookup(const char *hostname, UCHAR * address,
 	}
 	fclose(fp);
 
+	/* Some debugging */
 	if (result == 0) {
 		_nss_dnsblock_syslog("PASS: %s", hostname);
 	} else {

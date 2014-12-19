@@ -1,3 +1,9 @@
+dnsblock (0.02) wheezy; urgency=low
+
+  * 1st: Load /etc/dnsblock
+  * 2nd: Load $HOME/.dnsblock
+
+ -- Aiko Barz <aiko@torrentkino.de>  Fri, 19 Dec 2014 21:27:00 +0100
 dnsblock (0.01) wheezy; urgency=low
 
   * Init

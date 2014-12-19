@@ -24,5 +24,7 @@ along with dnsblock.  If not, see <http://www.gnu.org/licenses/>.
 
 int _nss_dnsblock_lookup(const char *hostname, UCHAR * address,
 			 int *af, int *address_size);
+int _nss_dnsblock_load(const char *filename, const char *hostname,
+		       UCHAR * address, int *af, int *address_size);
 int _nss_dnsblock_pcre_match(const char *subject, const char *pattern);
 void _nss_dnsblock_syslog(const char *format, ...);
