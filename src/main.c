@@ -26,49 +26,6 @@ along with dnsblock.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "main.h"
 
-int _nss_dnsblock_pcre_match(const char *subject, const char *pattern)
-{
-	pcre *re;
-	const char *error;
-	int erroffset;
-	int ovector[OVECCOUNT];
-	int subject_length;
-	int rc;
-
-	subject_length = strlen(subject);
-
-	re = pcre_compile(pattern,	/* the pattern */
-			  0,	/* default options */
-			  &error,	/* for error message */
-			  &erroffset,	/* for error offset */
-			  NULL);	/* use default character tables */
-
-	if (re == NULL) {
-		_nss_dnsblock_syslog
-		    ("ERROR: PCRE compilation failed at offset %d: %s\n",
-		     erroffset, error);
-		return 0;
-	}
-
-	rc = pcre_exec(re, NULL, subject, subject_length, 0, 0, ovector,
-		       OVECCOUNT);
-
-	if (rc < 0) {
-		switch (rc) {
-		case PCRE_ERROR_NOMATCH:
-			break;
-		default:
-			/* Matching error */
-			break;
-		}
-		pcre_free(re);
-		return 0;
-	}
-
-	pcre_free(re);
-	return 1;
-}
-
 int _nss_dnsblock_lookup(const char *hostname, UCHAR * address,
 			 int *af, int *address_size)
 {
@@ -148,6 +105,48 @@ int _nss_dnsblock_lookup(const char *hostname, UCHAR * address,
 	}
 
 	return result;
+}
+
+int _nss_dnsblock_pcre_match(const char *subject, const char *pattern)
+{
+	pcre *re = NULL;
+	const char *error = NULL;
+	int erroffset = 0;
+	int ovector[OVECCOUNT];
+	int size = 0;
+	int rc = 0;
+
+	size = strlen(subject);
+
+	re = pcre_compile(pattern,	/* the pattern */
+			  0,	/* default options */
+			  &error,	/* for error message */
+			  &erroffset,	/* for error offset */
+			  NULL);	/* use default character tables */
+
+	if (re == NULL) {
+		_nss_dnsblock_syslog
+		    ("ERROR: PCRE compilation failed at offset %d: %s\n",
+		     erroffset, error);
+		return 0;
+	}
+
+	rc = pcre_exec(re, NULL, subject, size, 0, 0, ovector, OVECCOUNT);
+
+	if (rc < 0) {
+		switch (rc) {
+		case PCRE_ERROR_NOMATCH:
+			break;
+		default:
+			/* Matching error */
+			break;
+		}
+		pcre_free(re);
+		return 0;
+	}
+
+	pcre_free(re);
+	return 1;
 }
 
 void _nss_dnsblock_syslog(const char *format, ...)

@@ -20,6 +20,7 @@
 #::1 \.ioam\.de$
 #::1 \.webtrekk\.net$
 #::1 \.vgwort\.de$
+::1 pi\.feedsportal\.com$ # Pixel
 
 # Social media buttons
 ::1 ^facebook\.com$
