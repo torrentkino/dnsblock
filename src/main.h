@@ -28,3 +28,4 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 		       UCHAR * address, int *af, int *address_size);
 int _nss_dnsblock_pcre_match(const char *subject, const char *pattern);
 void _nss_dnsblock_syslog(const char *format, ...);
+int _nss_dnsblock_valid_hostname(const char *hostname, int hostsize);

@@ -62,6 +62,4 @@ enum nss_status _nss_dnsblock_gaih_tuple(const char *hostname, int hostsize, str
 					 size_t buflen, int *errnop,
 					 int *h_errnop, int32_t * ttlp);
 
-int _nss_dnsblock_valid_hostname(const char *hostname, int hostsize);
-
 #endif				/* NSS_H */

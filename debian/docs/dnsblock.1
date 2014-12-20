@@ -73,7 +73,7 @@ hosts: files dnsblock dns
 127\.0\.0\.2   ^tracking\ed*\e\.
 
 # Block social media plugins that track you on every bigger site
-::1         \e\.randombook\.(com|net)$
+::1         \e\.randombook\e\.(com|net)$
 
 # Block requests to specific TLDs
 ::1         \e\.(gov|xxx)$
@@ -95,6 +95,9 @@ $ journalctl \-b \-f
 .fi
 .
 .IP "" 0
+.
+.SH "FILES"
+dnsblock tries to read /etc/dnsblock and $HOME/\.dnsblock in that particular order\. Both files get parsed if they exist\.
 .
 .SH "CHROMIUM NOTES"
 chromium seems to use its own DNS resolver and bypasses the DNS resolver of your operating system\. You can disable this behaviour by surfing to \fIchrome://flags/\fR\. Disable the \fIexperimental asynchronous DNS client\fR\.

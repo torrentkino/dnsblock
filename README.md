@@ -53,6 +53,10 @@ Otherwise, you may use
 	$ tail -f /var/log/messages
 	$ journalctl -b -f
 
+## FILES
+
+dnsblock tries to read /etc/dnsblock and $HOME/.dnsblock in that particular order. Both files get parsed if they exist.
+
 ## CHROMIUM NOTES
 
 chromium seems to use its own DNS resolver and bypasses the DNS resolver of your operating system. You can disable this behaviour by surfing to *chrome://flags/*. Disable the *experimental asynchronous DNS client*.

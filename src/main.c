@@ -194,3 +194,28 @@ void _nss_dnsblock_syslog(const char *format, ...)
 	syslog(LOG_INFO, "%s", log_buf);
 	closelog();
 }
+
+int _nss_dnsblock_valid_hostname(const char *hostname, int hostsize)
+{
+	int i = 0;
+
+	for (i = 0; i < hostsize; i++) {
+		if (hostname[i] >= '0' && hostname[i] <= '9') {
+			continue;
+		} else if (hostname[i] >= 'A' && hostname[i] <= 'Z') {
+			continue;
+		} else if (hostname[i] >= 'a' && hostname[i] <= 'z') {
+			continue;
+		} else if (hostname[i] == '-') {
+			continue;
+		} else if (hostname[i] == '_') {
+			continue;
+		} else if (hostname[i] == '.') {
+			continue;
+		} else {
+			return 0;
+		}
+	}
+
+	return 1;
+}
