@@ -64,7 +64,7 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 	char str[BUF_SIZE];
 	char regex[256];
 	char target[256];
-	int result = 0, r0 = 0, r1 = 0;
+	int result = 0, match = 0, is_ip = 0;
 	UCHAR buf[sizeof(struct in6_addr)];
 
 	fp = fopen(filename, "r");
@@ -92,48 +92,57 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 		sscanf(str, "%255s%*[ \t]%255s", target, regex);
 
 		/* Match requested hostname against my regular expressions */
-		r0 = _nss_dnsblock_pcre_match(hostname, regex);
+		match = _nss_dnsblock_pcre_match(hostname, regex);
 
-		if (r0 != 1) {
+		/* No match: Go on */
+		if (match == 0) {
 			continue;
+		}
+
+		/* Whitelist: Passthrough */
+		if (*target == '-') {
+			result = 1;
+			break;
 		}
 
 		/* Try to convert the IP address to a binary representation. Start with
 		   IPv6. Try IPv4 later. */
-		r1 = inet_pton(AF_INET6, target, buf);
-		if (r1 == 1) {
+		is_ip = inet_pton(AF_INET6, target, buf);
+		if (is_ip == 1) {
 			*af = AF_INET6;
 		} else {
-			r1 = inet_pton(AF_INET, target, buf);
-			if (r1 == 1) {
+			is_ip = inet_pton(AF_INET, target, buf);
+			if (is_ip == 1) {
 				*af = AF_INET;
 			}
 		}
 
-		if (r1 != 1) {
-			_nss_dnsblock_syslog("ERROR: Parsing %s failed",
-					     target);
-			continue;
-		}
-
-		if (r0 == 1 && r1 == 1) {
+		if (is_ip == 1) {
 			*address_size = (*af == AF_INET6) ? 16 : 4;
-
 			memcpy(address, buf, *address_size);
-			result = 1;
+			result = 2;
 			break;
+		} else {
+			_nss_dnsblock_syslog("ERROR: Parsing %s failed", target);
+			continue;
 		}
 	}
 	fclose(fp);
 
 	/* Some debugging */
-	if (result == 0) {
+	switch(result) {
+	case 0:
 		_nss_dnsblock_syslog("PASS: %s", hostname);
-	} else {
+		break;
+	case 1:
+		_nss_dnsblock_syslog("PASSTHROUGH: %s", hostname);
+		break;
+	default:
 		_nss_dnsblock_syslog("DENY: %s -> %s", hostname, target);
 	}
 
-	return result;
+	/* Return 0 or 1 only */
+	return(result <= 1) ? 0 : 1;
 }
 
 int _nss_dnsblock_pcre_match(const char *subject, const char *pattern)

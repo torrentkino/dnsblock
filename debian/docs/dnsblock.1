@@ -1,22 +1,13 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "DNSBLOCK" "1" "December 2014" "" ""
+.TH "DNSBLOCK" "1" "March 2015" "" ""
 .
 .SH "NAME"
 \fBdnsblock\fR \- Hosts file with regex support
 .
 .SH "DESCRIPTION"
-\fIdnsblock\fR is a NSS library that works like the /etc/hosts file except that it makes use of Perl regular expressions (PCRE) to determine the target\. That makes it more suitable to block outgoing traffic than the /etc/hosts file itself\. Create a configuration file /etc/dnsblock and add \fIdnsblock\fR to your /etc/nsswitch\.conf configuration to make it work\.
-.
-.P
-The major problem behind this is that it gets harder and harder to get knowledge of the ongoing outgoing traffic\. Some people create huge /etc/hosts files that contain the exact hostnames of the offending servers\. This is a little bit too static while cloud services throw out hundreds of new servers with random IP addresses every week\.
-.
-.P
-Besides the battery problems, ad servers became an attractive attack platform in the past\. Controlling ad servers enable attackers to deploy malware to bigger audiences on large websites\. These ad platforms are controlled by random ad service providers and not necessarily by those large website operators\.
-.
-.P
-\fIdnsblock\fR happens before the real DNS request\. So it should not interfere with DNSSEC\.
+\fIdnsblock\fR is a NSS library that acts like the /etc/hosts file except that it makes use of Perl regular expressions (PCRE) to match the hostname\. Create a configuration file ~/\.dnsblock and add \fIdnsblock\fR to your /etc/nsswitch\.conf configuration to enable \fIdnsblock\fR\.
 .
 .SH "INSTALLATION"
 There is a simple installation helper for Debian/Ubuntu\. Just run one of the following commands to create a installable package\.
@@ -66,13 +57,19 @@ hosts: files dnsblock dns
 .
 .nf
 
+# Path through all multicast DNS requests
+\-           \e\.local$
+
+# Path through all DE domains
+\-           \e\.de$
+
 # Block ad servers like adserver\.example\.net
 127\.0\.0\.1   ^adserver\e\.
 
 # Block tracking servers like tracking123\.somedomain\.com
 127\.0\.0\.2   ^tracking\ed*\e\.
 
-# Block social media plugins that track you on every bigger site
+# Block social media plugins that keep tracking you with "Like" buttons
 ::1         \e\.randombook\e\.(com|net)$
 
 # Block requests to specific TLDs
@@ -83,7 +80,7 @@ hosts: files dnsblock dns
 .IP "" 0
 .
 .SH "LOGGING"
-\fIdnsblock\fR logs all dns requests at the moment\. An on/off switch will be made later\. You can follow the lookup attempts with the following approaches depending on your system\.
+\fIdnsblock\fR logs all DNS requests to your log environment\.
 .
 .IP "" 4
 .
@@ -97,7 +94,7 @@ $ journalctl \-b \-f
 .IP "" 0
 .
 .SH "FILES"
-dnsblock tries to read /etc/dnsblock and $HOME/\.dnsblock in that particular order\. Both files get parsed if they exist\.
+dnsblock reads /etc/dnsblock and $HOME/\.dnsblock in that particular order\. Both files get parsed if they exist\.
 .
 .SH "CHROMIUM NOTES"
 chromium seems to use its own DNS resolver and bypasses the DNS resolver of your operating system\. You can disable this behaviour by surfing to \fIchrome://flags/\fR\. Disable the \fIexperimental asynchronous DNS client\fR\.
