@@ -135,7 +135,7 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 		_nss_dnsblock_syslog("PASS: %s", hostname);
 		break;
 	case 1:
-		_nss_dnsblock_syslog("PASSTHROUGH: %s", hostname);
+		_nss_dnsblock_syslog("PASS: %s", hostname);
 		break;
 	default:
 		_nss_dnsblock_syslog("DENY: %s -> %s", hostname, target);

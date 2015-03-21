@@ -1,6 +1,11 @@
+dnsblock (0.05) wheezy; urgency=low
+
+  * Real world example
+
+ -- Aiko Barz <aiko@torrentkino.de>  Sat, 21 Mar 2015 12:07:00 +0100
 dnsblock (0.04) wheezy; urgency=low
 
-  * Use '*' instead of '-' for the path-through rules.
+  * Use '*' instead of '-' for the pass through rules.
 
  -- Aiko Barz <aiko@torrentkino.de>  Sat, 21 Mar 2015 08:04:00 +0100
 
