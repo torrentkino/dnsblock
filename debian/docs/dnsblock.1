@@ -57,22 +57,22 @@ hosts: files dnsblock dns
 .
 .nf
 
-# Path through all multicast DNS requests
-\-           \e\.local$
+# Path through all multicast DNS requests\.
+*           \e\.local$
 
-# Path through all DE domains
-\-           \e\.de$
+# Path through all DE domains, even the advertisments\.
+*           \e\.de$
 
-# Block ad servers like adserver\.example\.net
+# Block ad servers like adserver\.example\.net\.
 127\.0\.0\.1   ^adserver\e\.
 
-# Block tracking servers like tracking123\.somedomain\.com
+# Block tracking servers like tracking123\.somedomain\.com\.
 127\.0\.0\.2   ^tracking\ed*\e\.
 
-# Block social media plugins that keep tracking you with "Like" buttons
+# Block social media plugins that keep tracking you with "Like" buttons\.
 ::1         \e\.randombook\e\.(com|net)$
 
-# Block requests to specific TLDs
+# Block requests to specific TLDs\.
 ::1         \e\.(gov|xxx)$
 .
 .fi
