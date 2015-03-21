@@ -28,22 +28,22 @@ Otherwise, you may use
 
 /etc/dnsblock
 
-	# Path through all multicast DNS requests
-	- 			\.local$
+	# Path through all multicast DNS requests.
+	* 			\.local$
 
-	# Path through all DE domains
-	- 			\.de$
+	# Path through all DE domains, even the advertisments.
+	* 			\.de$
 
-	# Block ad servers like adserver.example.net
+	# Block ad servers like adserver.example.net.
 	127.0.0.1	^adserver\.
 
-	# Block tracking servers like tracking123.somedomain.com
+	# Block tracking servers like tracking123.somedomain.com.
 	127.0.0.2	^tracking\d*\.
 
-	# Block social media plugins that keep tracking you with "Like" buttons
+	# Block social media plugins that keep tracking you with "Like" buttons.
 	::1			\.randombook\.(com|net)$
 
-	# Block requests to specific TLDs
+	# Block requests to specific TLDs.
 	::1			\.(gov|xxx)$
 
 ## LOGGING

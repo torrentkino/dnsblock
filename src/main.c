@@ -99,8 +99,8 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 			continue;
 		}
 
-		/* Whitelist: Passthrough */
-		if (*target == '-') {
+		/* Whitelist: Early passthrough */
+		if (*target == '*') {
 			result = 1;
 			break;
 		}
@@ -123,7 +123,7 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 			result = 2;
 			break;
 		} else {
-			_nss_dnsblock_syslog("ERROR: Parsing %s failed", target);
+			_nss_dnsblock_syslog("ERROR: \"%s\"", target);
 			continue;
 		}
 	}

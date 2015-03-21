@@ -1,3 +1,9 @@
+dnsblock (0.04) wheezy; urgency=low
+
+  * Use '*' instead of '-' for the path-through rules.
+
+ -- Aiko Barz <aiko@torrentkino.de>  Sat, 21 Mar 2015 08:04:00 +0100
+
 dnsblock (0.03) wheezy; urgency=low
 
   * Create bypass rules
