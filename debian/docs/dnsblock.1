@@ -4,10 +4,13 @@
 .TH "DNSBLOCK" "1" "March 2015" "" ""
 .
 .SH "NAME"
-\fBdnsblock\fR \- Hosts file with regex support
+\fBdnsblock\fR \- Regex Hosts file
+.
+.SH "MISSION"
+It becomes harder and harder to control to whom your computer wants to talk\. While visiting a web page your computer contacts tracking services or even malware platforms all over the world\. This may happen within email programs as well\. Cloud services are fast moving targets with various backends and vendors\. This line of defense focuses on DNS\.
 .
 .SH "DESCRIPTION"
-\fIdnsblock\fR is a NSS library that acts like the /etc/hosts file except that it makes use of Perl regular expressions (PCRE) to match the hostname\. Create a configuration file ~/\.dnsblock and add \fIdnsblock\fR to your /etc/nsswitch\.conf configuration to enable \fIdnsblock\fR\.
+\fIdnsblock\fR is a NSS library that acts like the /etc/hosts file except that it makes use of regular expressions (PCRE) to match the hostname\. Create a configuration file ~/\.dnsblock and add \fIdnsblock\fR to your /etc/nsswitch\.conf configuration to enable \fIdnsblock\fR\.
 .
 .SH "INSTALLATION"
 There is a simple installation helper for Debian/Ubuntu\. Just run one of the following commands to create a installable package\.
@@ -57,11 +60,8 @@ hosts: files dnsblock dns
 .
 .nf
 
-# Path through all multicast DNS requests\.
+# Early pass\-through for all multicast DNS requests\.
 *           \e\.local$
-
-# Path through all DE domains, even the advertisments\.
-*           \e\.de$
 
 # Block ad servers like adserver\.example\.net\.
 127\.0\.0\.1   ^adserver\e\.
@@ -69,11 +69,13 @@ hosts: files dnsblock dns
 # Block tracking servers like tracking123\.somedomain\.com\.
 127\.0\.0\.2   ^tracking\ed*\e\.
 
-# Block social media plugins that keep tracking you with "Like" buttons\.
-::1         \e\.randombook\e\.(com|net)$
+# Pass\-through some TLDs\.
+*           \e\.nl$
+*           \e\.se$
+*           \e\.org$
 
-# Block requests to specific TLDs\.
-::1         \e\.(gov|xxx)$
+# Block everything else\.
+127\.0\.0\.3   \.*
 .
 .fi
 .
@@ -96,24 +98,5 @@ $ journalctl \-b \-f
 .SH "FILES"
 dnsblock reads /etc/dnsblock and $HOME/\.dnsblock in that particular order\. Both files get parsed if they exist\.
 .
-.SH "CHROMIUM NOTES"
-chromium seems to use its own DNS resolver and bypasses the DNS resolver of your operating system\. You can disable this behaviour by surfing to \fIchrome://flags/\fR\. Disable the \fIexperimental asynchronous DNS client\fR\.
-.
-.SH "FIREFOX NOTES"
-Firefox offers the following plugins, that make your surfing experience extremely uncomfortable\. :)
-.
-.IP "" 4
-.
-.nf
-
-* NoScript
-* RequestPolicy
-* CookieMonster
-* Certificate Patrol
-* DNSSEC TLSA Validator
-* Various Adblockers
-.
-.fi
-.
-.IP "" 0
-
+.SH "CHROME NOTES"
+Chrome acts like a full featured OS within your OS and comes with its own DNS resolver\. It was once possible to use the Linux OS DNS resolver\. But it seems like this feature has been disabled now\. Search for \fIexperimental asynchronous DNS client\fR and \fIchrome://flags\fR\.

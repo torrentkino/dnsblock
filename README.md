@@ -1,9 +1,13 @@
-dnsblock(1) -- Hosts file with regex support
-============================================
+dnsblock(1) -- Regex Hosts file
+===============================
+
+## MISSION
+
+It becomes harder and harder to control to whom your computer wants to talk. While visiting a web page your computer contacts tracking services or even malware platforms all over the world. This may happen within email programs as well. Cloud services are fast moving targets with various backends and vendors. This line of defense focuses on DNS.
 
 ## DESCRIPTION
 
-*dnsblock* is a NSS library that acts like the /etc/hosts file except that it makes use of Perl regular expressions (PCRE) to match the hostname. Create a configuration file ~/.dnsblock and add *dnsblock* to your /etc/nsswitch.conf configuration to enable *dnsblock*.
+*dnsblock* is a NSS library that acts like the /etc/hosts file except that it makes use of regular expressions (PCRE) to match the hostname. Create a configuration file ~/.dnsblock and add *dnsblock* to your /etc/nsswitch.conf configuration to enable *dnsblock*.
 
 ## INSTALLATION
 
@@ -28,11 +32,8 @@ Otherwise, you may use
 
 /etc/dnsblock
 
-	# Path through all multicast DNS requests.
+	# Early pass-through for all multicast DNS requests.
 	* 			\.local$
-
-	# Path through all DE domains, even the advertisments.
-	* 			\.de$
 
 	# Block ad servers like adserver.example.net.
 	127.0.0.1	^adserver\.
@@ -40,11 +41,13 @@ Otherwise, you may use
 	# Block tracking servers like tracking123.somedomain.com.
 	127.0.0.2	^tracking\d*\.
 
-	# Block social media plugins that keep tracking you with "Like" buttons.
-	::1			\.randombook\.(com|net)$
+	# Pass-through some TLDs.
+	* 			\.nl$
+	* 			\.se$
+	* 			\.org$
 
-	# Block requests to specific TLDs.
-	::1			\.(gov|xxx)$
+	# Block everything else.
+	127.0.0.3	.*
 
 ## LOGGING
 
@@ -57,17 +60,6 @@ Otherwise, you may use
 
 dnsblock reads /etc/dnsblock and $HOME/.dnsblock in that particular order. Both files get parsed if they exist.
 
-## CHROMIUM NOTES
+## CHROME NOTES
 
-chromium seems to use its own DNS resolver and bypasses the DNS resolver of your operating system. You can disable this behaviour by surfing to *chrome://flags/*. Disable the *experimental asynchronous DNS client*.
-
-## FIREFOX NOTES
-
-Firefox offers the following plugins, that make your surfing experience extremely uncomfortable. :)
-
-	* NoScript
-	* RequestPolicy
-	* CookieMonster
-	* Certificate Patrol
-	* DNSSEC TLSA Validator
-	* Various Adblockers
+Chrome acts like a full featured OS within your OS and comes with its own DNS resolver. It was once possible to use the Linux OS DNS resolver. But it seems like this feature has been disabled now. Search for *experimental asynchronous DNS client* and *chrome://flags*.
