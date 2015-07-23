@@ -1,40 +1,40 @@
-##
-## README
-##
-
-# The order matters
-# ::1 equals 127.0.0.1 (IPv6/IPv4)
-# ::1 normally exists even without IPv6 connectivity
-# It is possible to use any valid IP address
+# 1. The order matters
+# 2. ::1 == 127.0.0.1 (IPv6/IPv4)
+# 3. You may use other valid IPs instead of 127.0.0.1/::1
 
 ##
-## Early pass-through
+## Early pass-throughs
 ##
 
-# Allow all local MDNS requests
+# Allow MDNS requests
 * \.local$
 
-# Allow all local Fritzbox devices by AVM like http://fritz.box
+# Allow AVM-Fritzbox routers (http://fritz.box)
 * \.box$
+
+# Allow all lookups, that do not contain a '.'
+# Usecase: Enter a string into the URL-bar within your webbrowser.
+#          a) The browser does a DNS lookup and finds nothing
+#          b) The browser asks a search engine like Google
+# This regex does not disturb (a).
+* ^((?!\.).)*$
 
 ##
 ## Embedded buttons
 ##
 
 # Comment one of those lines out if you use that particular service.
+::1 (?:^|\.)twitter\.com$
 ::1 ^plus\.google\.com$
-
-::1 ^twitter\.com$
-::1 \.twitter\.com$
-
-::1 facebook\.com$
-::1 facebook\.net$
-
-::1 ^digg\.com$
-::1 ^pinterest\.com$
-::1 ^reddit\.com$
-::1 \.tumblr\.com$
-::1 \.xing\.com$
+::1 ^plusone\.google\.com$
+::1 (?:^|\.)facebook\.(com|net)$
+::1 (?:^|\.)digg\.com$
+::1 (?:^|\.)pinterest\.com$
+::1 (?:^|\.)reddit\.com$
+::1 (?:^|\.)tumblr\.com$
+::1 (?:^|\.)xing\.com$
+::1 (?:^|\.)linkedin\.com$
+::1 (?:^|\.)stumbleupon\.com$
 
 ##
 ## Generic catchall rules
@@ -42,7 +42,6 @@
 
 # Generic advertisment/tracker networks.
 ::1 ^ad\d*\.
-::1 ^ads\.
 ::1 ^adv\.
 ::1 ^ads\d*\.
 ::1 ^adnet\.
@@ -59,52 +58,43 @@
 ::1 ^adimages\.
 ::1 ^adsadmin\.
 ::1 ^banner\S*\.
-::1 ^counter\.
-::1 ^counter\d+\.
+::1 ^counter\d*\.
 ::1 ^metric\.
 ::1 ^metrics\.
 ::1 ^openad\.
 ::1 ^openads\.
+::1 ^piwik\.
 ::1 ^track\.
 ::1 ^tracker\.
 ::1 ^tracking\.
 
 ::1 \.ad\.
 ::1 \.ads\.
+::1 \.adfarm\d*\.
 ::1 \.adtech\.
 ::1 \.adserver\.
-::1 \.counter\.
-::1 \.counter\d+\.
+::1 \.counter\d*\.
+::1 \.metric\.
 
 ##
-## My personal special cases. It is your choice in the end.
+## Important to German journalists. It is your choice...
 ##
 
-# Important to German journalists
-# Verwertungsgesellschaft Wort
 # http://de.wikipedia.org/wiki/Verwertungsgesellschaft_Wort
-#::1 vgwort\.de$
+::1 (?:^|\.)vgwort\.de$
 
-# Important to German news portals
 # http://de.wikipedia.org/wiki/Informationsgemeinschaft_zur_Feststellung_der_Verbreitung_von_Werbeträgern
-#::1 \.ivwbox\.de$
-#::1 ioam\.de$
-
-##
-## Various brands
-##
+::1 (?:^|\.)ivwbox\.de$
+::1 (?:^|\.)ioam\.de$
 
 # Amazon addservers and trackers
+::1 \.amazon-adsystem\.com$
+::1 \.bestamazontips\.com$
 ::1 rcm-images.amazon.com$
-::1 ir-na.amazon-adsystem.com$
 ::1 fls-na.amazon.com$
-::1 sdogiu.bestamazontips.com$
-::1 s.amazon-adsystem.com$
-::1 dra.amazon-adsystem.com$
 ::1 adagiobanner.s3.amazonaws.com$
 ::1 aan.amazon.com$
 ::1 uedata.amazon.com$
-::1 aax-us-east.amazon-adsystem.com$
 
 # Google addservers and trackers
 ::1 googleadservices\.com$
@@ -112,135 +102,118 @@
 ::1 video-stats.video.google.com
 ::1 \.google-analytics\.com$
 ::1 \.googlesyndication\.com$
-::1 affiliate.googleusercontent.com
 ::1 adservices.google.com
-::1 doubleclick.com
-::1 doubleclick.de
-::1 \.doubleclick\.net$
+::1 (?:^|\.)doubleclick\.(de|com|net)$
 
-# Old stuff
-::1 \.veeseo\.com$
-::1 \.taboola\.com$
-::1 \.pinterest\.com$
-::1 \.meetrics\.(com|net)$ # Ad Attention Monitor (spiegel.de)
-::1 ^thruport\.com$
-::1 \.thruport\.com$
-::1 ^2o7\.net$
-::1 \.2o7\.net$
-::1 \.newrelic\.com$ # http://newrelic.com/
-::1 \.webtrekk\.net$
-::1 ^casalemedia\.com$
-::1 \.casalemedia\.com$
-::1 ^[a-z]\.ligatus\.(de|com)$ # Premium clicks, premium leads, 20.12.1014
-::1 \.cxense.com # At Cxense, our mission is to provide deep insights into the behavior of your audiences, on all devices.
-::1 (da|pi)\.feedsportal\.com$	# interferes with TechRepublic email newsletters
-
-# Google Analytics tells you what, Inspectlet tells you why.
-# 21.03.2015
-::1 \.inspectlet\.com$
+# 24.03.2015
+::1 (?:^|\.)meetrics\.(com|net)$
+::1 (?:^|\.)2o7\.net$
+::1 (?:^|\.)newrelic\.com$
+::1 (?:^|\.)veeseo\.com$
+::1 (?:^|\.)taboola\.com$
+::1 (?:^|\.)casalemedia\.com$
+::1 (?:^|\.)cxense.com
+::1 (?:^|\.)thruport\.com$
+::1 (?:^|\.)webtrekk\.net$
+::1 (?:^|\.)ligatus\.(de|com)$
+::1 (?:^|\.)inspectlet\.com$
+::1 (?:^|\.)zedo\.com$
+::1 (?:^|\.)mathtag\.com$
+::1 (?:^|\.)chartbeat\.com$
+::1 (?:^|\.)demdex\.net$
+::1 (?:^|\.)qualtrics\.com$
+::1 (?:^|\.)clicktale\.(com|net)$
+::1 (?:^|\.)krxd\.net$
+::1 (?:^|\.)smartadserver\.
+::1 (?:^|\.)outbrain\.com$
+::1 (?:^|\.)nuggad\.net$
+::1 (?:^|\.)nugg\.ad$
+::1 (?:^|\.)kissmetrics\.com$
+::1 (?:^|\.)intellitxt\.com$
+::1 (?:^|\.)vibrantmedia\.com$
+::1 (?:^|\.)parsely\.com$
+::1 (?:^|\.)scorecardresearch\.com$
+::1 (da|pi)\.feedsportal\.com$
 ::1 ^inspectletws\.
 
-# Experience the easiest way to boost your sales, help solve issues and
-# understand your customers with Olark live chat.
-# 21.03.2015
-::1 \.olark\.com$
+# 10.04.2015
+::1 (?:^|\.)identitypr\.com$
+::1 (?:^|\.)servedbyopenx\.com$
+::1 (?:^|\.)webtrendslive\.com$
+::1 (?:^|\.)visualrevenue\.com$
+::1 (?:^|\.)pingdom\.(net|com)$
+::1 (?:^|\.)hotjar\.com$
 
-# Marketing, das funktioniert
-# 21.03.2015
-::1 \.plista\.com$
+# 23.04.2015
+::1 (?:^|\.)gigya\.com$
+::1 (?:^|\.)simplereach\.com$
+::1 (?:^|\.)gravity\.com$
 
-# Advertising Technology Partner for Publishers
-# World's Largest Independent Global Ad Server,
-# Ad Technology Innovator and Publisher Monetization Partner
-# 21.03.2015
-::1 ^zedo\.com$
-::1 \.zedo\.com$
+# 01.07.2015
+::1 (?:^|\.)admedo\.com$
+::1 (?:^|\.)adnxs\.com$
+::1 (?:^|\.)appnexus\.com$
+::1 (?:^|\.)tubemogul\.com$
+::1 (?:^|\.)adroll\.com$
+::1 (?:^|\.)moatads\.com$
+::1 (?:^|\.)criteo\.com$
+::1 (?:^|\.)perfectmarket\.com$
+::1 (?:^|\.)tagsrvcs\.com$
 
-# MathTag.com is a domain used by MediaMath to place cookies, on behalf of its
-# customers, on the computers of visitors to our selected customer's websites
-# and who may view our customer's display advertisements.
-# 21.03.2015
-::1 ^mathtag\.com$
-::1 \.mathtag\.com$
+# 02.07.2015
+::1 (?:^|\.)adition\.com$
+::1 (?:^|\.)plista\.com$
 
-# Ready to help you build your loyal audience no matter where they are.
-# 21.03.2015
-::1 ^chartbeat\.com$
-::1 \.chartbeat\.com$
-
-# Build audience profiles that you can use anywhere.
-# 21.03.2015
-::1 ^demdex\.net$
-::1 \.demdex\.net$
-
-# Know your customers.
-# Know your employees.
-# Know your market.
-# 21.03.2015
-::1 ^qualtrics\.com$
-::1 \.qualtrics\.com$
-
-# Build a Better Online Customer Experience
-# Visualize Behavior > Optimize Experience > Grow Business
-# 21.03.2015
-::1 ^clicktale\.(com|net)$
-::1 \.clicktale\.(com|net)$
-
-# Who is behind this?
-# 21.03.2015
-::1 \.krxd\.net$
-
-# Use an integrated ad serving & RTB platform to manage all your digital campaigns
-# 21.03.2015
-::1 ^smartadserver\.
-::1 \.smartadserver\.
-
-# Your content will be promoted on the web's largest and most respected media
-# properties
-# 21.03.2015
-::1 ^outbrain\.com$
-::1 \.outbrain\.com$
-
-# We are Europe’s Audience Experts and provide publishers, media agencies and
-# programmatic / RTB platforms with cutting edge real-time technology for
-# audience targeting, efficient brand advertising and data management.
-# 21.03.2015
-::1 ^nuggad\.net$
-::1 \.nuggad\.net$
-::1 ^nugg\.ad$
-::1 \.nugg\.ad$
-
-# KISSmetrics gives you the insights you need to optimize your marketing.
-# 21.03.2015
-::1 ^kissmetrics\.com$
-::1 \.kissmetrics\.com$
-
-# Vibrant connects consumers in real time with engaging content and brand
-# experiences — delivered cross platform.
-# 21.03.2015
-::1 ^intellitxt\.com$
-::1 \.intellitxt\.com$
-::1 ^vibrantmedia\.com$
-::1 \.vibrantmedia\.com$
+# 07.07.2015
+::1 (?:^|\.)optimizely\.com$
+::1 (?:^|\.)quantserve\.com$
+::1 (?:^|\.)adzerk\.net$
 
 ##
 ## Hate speech
 ##
 
-::1 \.bild\.de$
+::1 (?:^|\.)bild\.de$
 
 ##
 ## TLDs whitelist
 ##
 
 # Explicitly allow those TLDs before the big DROP_ALL
+* \.am$
+* \.at$
+* \.au$
+* \.biz$
+* \.ca$
+* \.cc$
+* \.ch$
+* \.co$
 * \.com$
-* \.net$
-* \.org$
-* \.de$
 * \.co\.uk$
+* \.de$
+* \.dk$
+* \.edu$
+* \.eu$
+* \.es$
+* \.fm$
+* \.in$
+* \.info$
+* \.io$
+* \.it$
+* \.org$
+* \.org.uk$
+* \.me$
+* \.mobi$
+* \.name$
+* \.net$
+* \.no$
+* \.nu$
 * \.nl$
+* \.nz$
+* \.pl$
 * \.se$
+* \.training$
+* \.tv$
 
 ##
 ## DROP_ALL
