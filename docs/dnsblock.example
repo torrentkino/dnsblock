@@ -102,8 +102,8 @@
 #::1 (?:^|\.)vgwort\.de$
 
 # http://de.wikipedia.org/wiki/Informationsgemeinschaft_zur_Feststellung_der_Verbreitung_von_Werbeträgern
-::1 (?:^|\.)ivwbox\.de$
-::1 (?:^|\.)ioam\.de$
+#::1 (?:^|\.)ivwbox\.de$
+#::1 (?:^|\.)ioam\.de$
 
 # Deny Amazon addservers and trackers
 ::1 \.amazon-adsystem\.com$
