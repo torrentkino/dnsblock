@@ -2,7 +2,7 @@
 
 if [ ! $(which ronn) ]; then
 	apt-cache show ruby-ronn
-	echo "# sudo apt-get install ruby-ronn"
+	echo "# sudo apt install ronn"
 	exit
 fi
 

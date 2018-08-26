@@ -20,27 +20,44 @@
 * ^((?!\.).)*$
 
 ##
+## Whitelist for hosts that fall into aggressive generic rules
+##
+
+# Allow those issue trackers, but still block the other meanings of "tracker"
+* ^tracker\.ceph\.com$
+* ^tracker\.debian\.org$
+
+# Whitelist their DNS-checker, but block the rest of Pingdom.
+* ^dnscheck\.pingdom\.com$
+
+##
 ## Embedded buttons
 ##
 
 # Comment one of those lines out if you use that particular service.
-::1 (?:^|\.)twitter\.com$
+#::1 (?:^|\.)twitter\.com$
 ::1 ^plus\.google\.com$
 ::1 ^plusone\.google\.com$
 ::1 (?:^|\.)facebook\.(com|net)$
 ::1 (?:^|\.)digg\.com$
 ::1 (?:^|\.)pinterest\.com$
-::1 (?:^|\.)reddit\.com$
+#::1 (?:^|\.)reddit\.com$
 ::1 (?:^|\.)tumblr\.com$
 ::1 (?:^|\.)xing\.com$
 ::1 (?:^|\.)linkedin\.com$
 ::1 (?:^|\.)stumbleupon\.com$
+::1 (?:^|\.)bild\.de$
+
+# Youtube
+#::1 (?:^|\.)ytimg\.com$
+#::1 (?:^|\.)youtube\.com$
+#::1 (?:^|\.)youtu\.be$
 
 ##
 ## Generic catchall rules
 ##
 
-# Generic advertisment/tracker networks.
+# Deny generic advertisment/tracker networks.
 ::1 ^ad\d*\.
 ::1 ^adv\.
 ::1 ^ads\d*\.
@@ -57,6 +74,7 @@
 ::1 ^adimage\.
 ::1 ^adimages\.
 ::1 ^adsadmin\.
+::1 ^adservice\.
 ::1 ^banner\S*\.
 ::1 ^counter\d*\.
 ::1 ^metric\.
@@ -81,13 +99,13 @@
 ##
 
 # http://de.wikipedia.org/wiki/Verwertungsgesellschaft_Wort
-::1 (?:^|\.)vgwort\.de$
+#::1 (?:^|\.)vgwort\.de$
 
 # http://de.wikipedia.org/wiki/Informationsgemeinschaft_zur_Feststellung_der_Verbreitung_von_Werbeträgern
 ::1 (?:^|\.)ivwbox\.de$
 ::1 (?:^|\.)ioam\.de$
 
-# Amazon addservers and trackers
+# Deny Amazon addservers and trackers
 ::1 \.amazon-adsystem\.com$
 ::1 \.bestamazontips\.com$
 ::1 rcm-images.amazon.com$
@@ -96,7 +114,7 @@
 ::1 aan.amazon.com$
 ::1 uedata.amazon.com$
 
-# Google addservers and trackers
+# Deny Google addservers and trackers
 ::1 googleadservices\.com$
 ::1 googletagservices\.com$
 ::1 video-stats.video.google.com
@@ -105,7 +123,7 @@
 ::1 adservices.google.com
 ::1 (?:^|\.)doubleclick\.(de|com|net)$
 
-# 24.03.2015
+# Deny 24.03.2015
 ::1 (?:^|\.)meetrics\.(com|net)$
 ::1 (?:^|\.)2o7\.net$
 ::1 (?:^|\.)newrelic\.com$
@@ -115,11 +133,12 @@
 ::1 (?:^|\.)cxense.com
 ::1 (?:^|\.)thruport\.com$
 ::1 (?:^|\.)webtrekk\.net$
+::1 (?:^|\.)wt-safetag\.com$
 ::1 (?:^|\.)ligatus\.(de|com)$
 ::1 (?:^|\.)inspectlet\.com$
 ::1 (?:^|\.)zedo\.com$
 ::1 (?:^|\.)mathtag\.com$
-::1 (?:^|\.)chartbeat\.com$
+::1 (?:^|\.)chartbeat\.(com|net)$
 ::1 (?:^|\.)demdex\.net$
 ::1 (?:^|\.)qualtrics\.com$
 ::1 (?:^|\.)clicktale\.(com|net)$
@@ -136,7 +155,7 @@
 ::1 (da|pi)\.feedsportal\.com$
 ::1 ^inspectletws\.
 
-# 10.04.2015
+# Deny: 10.04.2015
 ::1 (?:^|\.)identitypr\.com$
 ::1 (?:^|\.)servedbyopenx\.com$
 ::1 (?:^|\.)webtrendslive\.com$
@@ -144,12 +163,12 @@
 ::1 (?:^|\.)pingdom\.(net|com)$
 ::1 (?:^|\.)hotjar\.com$
 
-# 23.04.2015
+# Deny: 23.04.2015
 ::1 (?:^|\.)gigya\.com$
 ::1 (?:^|\.)simplereach\.com$
 ::1 (?:^|\.)gravity\.com$
 
-# 01.07.2015
+# Deny: 01.07.2015
 ::1 (?:^|\.)admedo\.com$
 ::1 (?:^|\.)adnxs\.com$
 ::1 (?:^|\.)appnexus\.com$
@@ -160,60 +179,185 @@
 ::1 (?:^|\.)perfectmarket\.com$
 ::1 (?:^|\.)tagsrvcs\.com$
 
-# 02.07.2015
+# Deny: 02.07.2015
 ::1 (?:^|\.)adition\.com$
 ::1 (?:^|\.)plista\.com$
 
-# 07.07.2015
+# Deny: 07.07.2015
 ::1 (?:^|\.)optimizely\.com$
 ::1 (?:^|\.)quantserve\.com$
 ::1 (?:^|\.)adzerk\.net$
 
-##
-## Hate speech
-##
+# Deny: 24.08.2015
+::1 (?:^|\.)advertising\.de$
 
-::1 (?:^|\.)bild\.de$
+# Deny: 22.09.2015
+::1 (?:^|\.)i12\.de$
+
+# Deny: 01.10.2015
+::1 (?:^|\.)janrain\.com$
+
+# Deny: 23.10.2015
+::1 (?:^|\.)netseer\.com$
+::1 (?:^|\.)addthis\.com$
+
+# Deny: 02.11.2015
+::1 (?:^|\.)adsafeprotected\.com$
+
+# Deny: 26.01.2016
+::1 (?:^|\.)aliexpress\.com$
+::1 (?:^|\.)dx\.com$
+
+# Deny: 15.02.2016
+::1 (?:^|\.)trkme\.net$
+
+# Deny: 23.04.2016
+::1 (?:^|\.)tradedoubler\.com$
+::1 (?:^|\.)kaltura\.com$
+::1 (?:^|\.)smartadcheck\.de$
+
+# Deny 08.12.2016
+::1 (?:^|\.)jwpltx\.com$
+::1 (?:^|\.)jwpcdn\.com$
+::1 (?:^|\.)rpxnow\.com$
+
+# Deny 14.01.2017
+::1 (?:^|\.)wbtrk\.net$
+::1 (?:^|\.)zanox\.com$
+
+# Deny 25.01.2017
+::1 (?:^|\.)content-ad\.net$
+
+# 12.03.2017
+::1 (?:^|\.)addefend-platform\.com$
+::1 (?:^|\.)adtechus\.com$
+
+# 14.03.2017
+::1 (?:^|\.)giphy\.com$
+
+# 20.03.2017
+::1 (?:^|\.)etracker\.de$
+
+# 20.02.2018
+::1 (?:^|\.)mpnrs\.com$
+
+# 24.03.2018
+::1 (?:^|\.)apester\.com$
+::1 (?:^|\.)qmerce\.com$
+
+# 06.06.2018
+::1 (?:^|\.)vxcp\.de$
 
 ##
 ## TLDs whitelist
 ##
 
-# Explicitly allow those TLDs before the big DROP_ALL
-* \.am$
+# Allow these TLDs before the big DROP_ALL
+* \.aero$
+* \.ae$
+* \.ai$
+* \.al$
+#* \.am$
+#* \.ar$
 * \.at$
 * \.au$
+* \.be$
+#* \.berlin$
+* \.bg$
 * \.biz$
+* \.blog$
+#* \.by$
+#* \.bz$
 * \.ca$
+* \.cash$
+* \.cat$
 * \.cc$
+* \.cern$
 * \.ch$
+* \.chat$
+#* \.ci$
 * \.co$
+* \.cloud$
 * \.com$
-* \.co\.uk$
+#* \.co\.nz$
+* \.cn$
+* \.cx$
+* \.cz$
 * \.de$
 * \.dk$
 * \.edu$
 * \.eu$
-* \.es$
+#* \.es$
+* \.fi$
 * \.fm$
+* \.fr$
+* \.games$
+* \.gl$
+* \.google$
+* \.gov$
+#* \.gr$
+* \.hk$
+#* \.hm$
+* \.horse$
+* \.hu$
+* \.id$
+* \.im$
 * \.in$
 * \.info$
 * \.io$
 * \.it$
+* \.is$
+* \.jp$
+#* \.kr$
+* \.li$
+* \.link$
+#* \.london$
+* \.lu$
+* \.ly$
+* \.pro$
 * \.org$
-* \.org.uk$
 * \.me$
 * \.mobi$
+* \.ms$
 * \.name$
+* \.ninja$
 * \.net$
+* \.news$
 * \.no$
-* \.nu$
+#* \.nu$
 * \.nl$
-* \.nz$
+#* \.nz$
+* \.photography$
 * \.pl$
+* \.pt$
+* \.press$
+* \.report$
+* \.rocks$
+#* \.ru$
 * \.se$
-* \.training$
+* \.sh$
+* \.shop$
+#* \.sg$
+* \.social$
+* \.solutions$
+#* \.space$
+* \.st$
+* \.sucks$
+* \.tips$
+* \.to$
+* \.today$
+#* \.training$
+* \.tt$
+* \.tube$
 * \.tv$
+* \.tw$
+#* \.ua$
+* \.uk$
+* \.us$
+#* \.website$
+* \.ws$
+* \.wtf$
+* \.xyz$
 
 ##
 ## DROP_ALL

@@ -8,3 +8,4 @@ debian/files
 debian/dnsblock.substvars
 *.o
 *~
+debian/.debhelper

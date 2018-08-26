@@ -1,3 +1,8 @@
+dnsblock (0.06) stretch; urgency=low
+
+  * Real world example
+
+ -- Aiko Barz <aiko@torrentkino.de>  Sun, 26 Aug 2018 15:22:00 +0100
 dnsblock (0.05) wheezy; urgency=low
 
   * Real world example
