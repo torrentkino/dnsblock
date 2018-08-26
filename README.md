@@ -49,7 +49,7 @@ Otherwise, you may use
 	# Block everything else.
 	127.0.0.3	.*
 
-	Have a look at *docs/dnsblock.example* for a real life example.
+	Have a look at docs/dnsblock.example for a real life example.
 
 ## LOGGING
 
