@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "DNSBLOCK" "1" "August 2018" "" ""
+.TH "DNSBLOCK" "1" "September 2018" "" ""
 .
 .SH "NAME"
 \fBdnsblock\fR \- Regex Hosts file
@@ -41,7 +41,7 @@ $ sudo make install
 .IP "" 0
 .
 .SH "CONFIGURATION"
-/etc/nsswitch\.conf
+Add dnsblock to /etc/nsswitch\.conf for regular use\.
 .
 .IP "" 4
 .
@@ -52,6 +52,12 @@ hosts: files dnsblock dns
 .fi
 .
 .IP "" 0
+.
+.P
+Add dnsblock_debug for debugging purposes\.
+.
+.P
+hosts: files dnsblock_debug dns
 .
 .SH "EXAMPLES"
 /etc/dnsblock
@@ -85,7 +91,7 @@ hosts: files dnsblock dns
 Have a look at \fIdocs/dnsblock\.example\fR for a real life example\.
 .
 .SH "LOGGING"
-\fIdnsblock\fR logs all DNS requests to your log environment\.
+\fIdnsblock_debug\fR logs all DNS requests to your log environment\.
 .
 .IP "" 4
 .
@@ -100,6 +106,3 @@ $ journalctl \-b \-f
 .
 .SH "FILES"
 dnsblock reads /etc/dnsblock and $HOME/\.dnsblock in that particular order\. Both files get parsed if they exist\.
-.
-.SH "CHROME NOTES"
-Chrome acts like a full featured OS within your OS and comes with its own DNS resolver\. It was once possible to use the Linux OS DNS resolver\. But it seems like this feature has been disabled now\. Search for \fIexperimental asynchronous DNS client\fR and \fIchrome://flags\fR\.

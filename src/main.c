@@ -129,8 +129,9 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 	}
 	fclose(fp);
 
+#ifdef DEBUG
 	/* Some debugging */
-	switch(result) {
+	switch (result) {
 	case 0:
 		_nss_dnsblock_syslog("PASS: %s", hostname);
 		break;
@@ -140,9 +141,10 @@ int _nss_dnsblock_load(const char *filename, const char *hostname,
 	default:
 		_nss_dnsblock_syslog("DENY: %s -> %s", hostname, target);
 	}
+#endif
 
 	/* Return 0 or 1 only */
-	return(result <= 1) ? 0 : 1;
+	return (result <= 1) ? 0 : 1;
 }
 
 int _nss_dnsblock_pcre_match(const char *subject, const char *pattern)
@@ -193,11 +195,14 @@ void _nss_dnsblock_syslog(const char *format, ...)
 	char va_buf[BUF_SIZE];
 	va_list vlist;
 
+	memset(log_buf, '\0', BUF_SIZE);
+	memset(va_buf, '\0', BUF_SIZE);
+
 	va_start(vlist, format);
-	vsnprintf(va_buf, BUF_SIZE, format, vlist);
+	vsnprintf(va_buf, BUF_OFF1, format, vlist);
 	va_end(vlist);
 
-	strncpy(log_buf, va_buf, BUF_OFF1);
+	memcpy(log_buf, va_buf, BUF_OFF1);
 
 	openlog(LOG_NAME, LOG_PID | LOG_CONS, LOG_USER);
 	syslog(LOG_INFO, "%s", log_buf);

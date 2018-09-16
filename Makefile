@@ -1,4 +1,4 @@
-SUBDIRS = dnsblock
+SUBDIRS = dnsblock dnsblock_debug
 
 .PHONY : all clean install docs sync debian ubuntu $(SUBDIRS)
 

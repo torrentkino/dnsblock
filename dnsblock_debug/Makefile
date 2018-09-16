@@ -1,8 +1,9 @@
-export CODENAME = libnss_dnsblock.so.2
+export CODENAME = libnss_dnsblock_debug.so.2
 export CC = gcc
 export CFLAGS = -O2
 CFLAGS += -std=gnu99 -fPIC -DPIC
 CFLAGS += -Wall -Wwrite-strings -pedantic
+CFLAGS += -DDEBUG
 export LDFLAGS = -lpcre
 OBJS=nss.o main.o
 
@@ -24,4 +25,3 @@ install:
 	mkdir -p $(DESTDIR)/lib/$(DEB_HOST_MULTIARCH)/
 	cp $(CODENAME) $(DESTDIR)/lib/$(DEB_HOST_MULTIARCH)/
 	mkdir -p $(DESTDIR)/usr/share/dnsblock/
-	cp ../docs/dnsblock.example $(DESTDIR)/usr/share/dnsblock/

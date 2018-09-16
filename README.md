@@ -24,9 +24,13 @@ Otherwise, you may use
 
 ## CONFIGURATION
 
-/etc/nsswitch.conf
+Add dnsblock to /etc/nsswitch.conf for regular use.
 
 	hosts: files dnsblock dns
+
+Add dnsblock_debug for debugging purposes.
+
+  hosts: files dnsblock_debug dns
 
 ## EXAMPLES
 
@@ -53,7 +57,7 @@ Have a look at *docs/dnsblock.example* for a real life example.
 
 ## LOGGING
 
-*dnsblock* logs all DNS requests to your log environment.
+*dnsblock_debug* logs all DNS requests to your log environment.
 
 	$ tail -f /var/log/messages
 	$ journalctl -b -f
@@ -61,7 +65,3 @@ Have a look at *docs/dnsblock.example* for a real life example.
 ## FILES
 
 dnsblock reads /etc/dnsblock and $HOME/.dnsblock in that particular order. Both files get parsed if they exist.
-
-## CHROME NOTES
-
-Chrome acts like a full featured OS within your OS and comes with its own DNS resolver. It was once possible to use the Linux OS DNS resolver. But it seems like this feature has been disabled now. Search for *experimental asynchronous DNS client* and *chrome://flags*.

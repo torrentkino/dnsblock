@@ -28,56 +28,119 @@ along with dnsblock.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "nss.h"
 
+#ifdef DEBUG
+enum nss_status _nss_dnsblock_debug_gethostbyname_r(const char *hostname,
+						    struct hostent *host,
+						    char *buffer,
+						    size_t buflen, int *errnop,
+						    int *h_errnop)
+{
+
+	return _nss_dnsblock_debug_gethostbyname3_r(hostname, AF_UNSPEC, host,
+						    buffer, buflen, errnop,
+						    h_errnop, NULL, NULL);
+}
+#else
 enum nss_status _nss_dnsblock_gethostbyname_r(const char *hostname,
 					      struct hostent *host,
-					      char *buffer, size_t buflen,
-					      int *errnop, int *h_errnop)
+					      char *buffer,
+					      size_t buflen, int *errnop,
+					      int *h_errnop)
 {
 
 	return _nss_dnsblock_gethostbyname3_r(hostname, AF_UNSPEC, host,
 					      buffer, buflen, errnop, h_errnop,
 					      NULL, NULL);
 }
+#endif
 
-enum nss_status _nss_dnsblock_gethostbyname2_r(const char *hostname, int af,
+#ifdef DEBUG
+enum nss_status _nss_dnsblock_debug_gethostbyname2_r(const char *hostname,
+						     int af,
+						     struct hostent *host,
+						     char *buffer,
+						     size_t buflen,
+						     int *errnop, int *h_errnop)
+{
+	return _nss_dnsblock_debug_gethostbyname3_r(hostname, af, host,
+						    buffer, buflen, errnop,
+						    h_errnop, NULL, NULL);
+}
+#else
+enum nss_status _nss_dnsblock_gethostbyname2_r(const char *hostname,
+					       int af,
 					       struct hostent *host,
-					       char *buffer, size_t buflen,
+					       char *buffer,
+					       size_t buflen,
 					       int *errnop, int *h_errnop)
 {
-
 	return _nss_dnsblock_gethostbyname3_r(hostname, af, host,
 					      buffer, buflen, errnop, h_errnop,
 					      NULL, NULL);
 }
+#endif
 
+#ifdef DEBUG
+enum nss_status _nss_dnsblock_debug_gethostbyname3_r(const char *hostname,
+						     int af,
+						     struct hostent *host,
+						     char *buffer,
+						     size_t buflen, int *errnop,
+						     int *h_errnop,
+						     int32_t * ttlp,
+						     char **canonp)
+{
+	return _nss_dnsblock_debug_hostent(hostname, strlen(hostname), af, host,
+					   buffer, buflen, errnop, h_errnop,
+					   ttlp, canonp);
+}
+#else
 enum nss_status _nss_dnsblock_gethostbyname3_r(const char *hostname, int af,
 					       struct hostent *host,
 					       char *buffer, size_t buflen,
 					       int *errnop, int *h_errnop,
 					       int32_t * ttlp, char **canonp)
 {
-
 	return _nss_dnsblock_hostent(hostname, strlen(hostname), af, host,
 				     buffer, buflen, errnop, h_errnop, ttlp,
 				     canonp);
 }
+#endif
 
+#ifdef DEBUG
+enum nss_status _nss_dnsblock_debug_gethostbyname4_r(const char *hostname,
+						     struct gaih_addrtuple
+						     **pat, char *buffer,
+						     size_t buflen, int *errnop,
+						     int *h_errnop,
+						     int32_t * ttlp)
+{
+	return _nss_dnsblock_debug_gaih_tuple(hostname, strlen(hostname), pat,
+					      buffer, buflen, errnop, h_errnop,
+					      ttlp);
+}
+#else
 enum nss_status _nss_dnsblock_gethostbyname4_r(const char *hostname,
 					       struct gaih_addrtuple **pat,
 					       char *buffer, size_t buflen,
 					       int *errnop, int *h_errnop,
 					       int32_t * ttlp)
 {
-
 	return _nss_dnsblock_gaih_tuple(hostname, strlen(hostname), pat,
 					buffer, buflen, errnop, h_errnop, ttlp);
 }
+#endif
 
-enum nss_status _nss_dnsblock_hostent(const char *hostname, int hostsize,
-				      int af, struct hostent *host,
-				      char *buffer, size_t buflen, int *errnop,
-				      int *h_errnop, int32_t * ttlp,
-				      char **canonp)
+#ifdef DEBUG
+enum nss_status _nss_dnsblock_debug_hostent(
+#else
+enum nss_status _nss_dnsblock_hostent(
+#endif
+					     const char *hostname, int hostsize,
+					     int af, struct hostent *host,
+					     char *buffer, size_t buflen,
+					     int *errnop, int *h_errnop,
+					     int32_t * ttlp, char **canonp)
 {
 
 	UCHAR address[16];
@@ -162,10 +225,17 @@ enum nss_status _nss_dnsblock_hostent(const char *hostname, int hostsize,
 	return NSS_STATUS_SUCCESS;
 }
 
-enum nss_status _nss_dnsblock_gaih_tuple(const char *hostname, int hostsize, struct
-					 gaih_addrtuple **pat, char *buffer,
-					 size_t buflen, int *errnop,
-					 int *h_errnop, int32_t * ttlp)
+#ifdef DEBUG
+enum nss_status _nss_dnsblock_debug_gaih_tuple(
+#else
+enum nss_status _nss_dnsblock_gaih_tuple(
+#endif
+						const char *hostname,
+						int hostsize, struct
+						gaih_addrtuple **pat,
+						char *buffer, size_t buflen,
+						int *errnop, int *h_errnop,
+						int32_t * ttlp)
 {
 
 	UCHAR address[16];

@@ -1,4 +1,5 @@
 dnsblock/libnss_dnsblock.so.2
+dnsblock_debug/libnss_dnsblock_debug.so.2
 debian/dnsblock/
 debian/dnsblock.debhelper.log
 debian/substvars

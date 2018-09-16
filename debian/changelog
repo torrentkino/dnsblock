@@ -1,3 +1,9 @@
+dnsblock (0.07) stretch; urgency=low
+
+  * New dnsblock_debug module for logging purposes.
+  * Do not log PASS and DENY by default.
+
+ -- Aiko Barz <aiko@torrentkino.de>  Sat, 15 Sep 2018 22:57:00 +0100
 dnsblock (0.06) stretch; urgency=low
 
   * Real world example
