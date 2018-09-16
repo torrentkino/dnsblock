@@ -30,7 +30,7 @@ Add dnsblock to /etc/nsswitch.conf for regular use.
 
 Add dnsblock_debug for debugging purposes.
 
-  hosts: files dnsblock_debug dns
+	hosts: files dnsblock_debug dns
 
 ## EXAMPLES
 
